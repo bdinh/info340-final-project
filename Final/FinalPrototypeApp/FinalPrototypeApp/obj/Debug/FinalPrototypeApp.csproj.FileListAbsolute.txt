@@ -1,0 +1,9 @@
+D:\_TEMP\FinalPrototypeApp\FinalPrototypeApp\bin\Debug\FinalPrototypeApp.exe.config
+D:\_TEMP\FinalPrototypeApp\FinalPrototypeApp\bin\Debug\FinalPrototypeApp.exe
+D:\_TEMP\FinalPrototypeApp\FinalPrototypeApp\bin\Debug\FinalPrototypeApp.pdb
+D:\_TEMP\FinalPrototypeApp\FinalPrototypeApp\obj\Debug\FinalPrototypeApp.csprojResolveAssemblyReference.cache
+D:\_TEMP\FinalPrototypeApp\FinalPrototypeApp\obj\Debug\FinalPrototypeApp.Form1.resources
+D:\_TEMP\FinalPrototypeApp\FinalPrototypeApp\obj\Debug\FinalPrototypeApp.Properties.Resources.resources
+D:\_TEMP\FinalPrototypeApp\FinalPrototypeApp\obj\Debug\FinalPrototypeApp.csproj.GenerateResource.Cache
+D:\_TEMP\FinalPrototypeApp\FinalPrototypeApp\obj\Debug\FinalPrototypeApp.exe
+D:\_TEMP\FinalPrototypeApp\FinalPrototypeApp\obj\Debug\FinalPrototypeApp.pdb

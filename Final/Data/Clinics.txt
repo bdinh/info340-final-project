@@ -1,0 +1,3 @@
+Bellevue,123 Main Street,Bellevue,WA,98004
+Kirkland,789 Lake Street,Kirkland,WA,98033
+Redmond,999 Availability Ave,Redmond,WA,98008
