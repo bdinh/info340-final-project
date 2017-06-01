@@ -436,52 +436,130 @@ BEGIN CATCH
     ROLLBACK TRANSACTION
 END CATCH 
 GO
-------------------------------------------------DO PERMISSIONS V V V V
-Deny Select On Products to Public
+
+
+Deny Select On Patients to Public
 GO
 
-Deny Select On Inventories to Public
+Deny Select On Doctors to Public
 GO
 
-Deny Insert On Products to Public
+Deny Select On Appointments to Public
 GO
 
-Deny Insert On Inventories to Public
+Deny Select On Clinics to Public
 GO
 
-Deny Update On Products to Public
+Deny Select On PatientAppointments to Public
 GO
 
-Deny Update On Inventories to Public
+Deny Select On DoctorClinics to Public
 GO
 
-Deny Delete On Products to Public
+Deny Insert Into Patients to Public
 GO
 
-Deny Delete On Inventories to Public
+Deny Insert Into Doctors to Public
 GO
 
-
-Grant Select On vProducts to Public
+Deny Insert Into Appointments to Public
 GO
 
-Grant Select On vInventories to Public
+Deny Insert Into Clinics to Public
 GO
 
-Grant Exec On uspInsProduct to Public
+Deny Insert Into PatientAppointments to Public
 GO
 
-Grant Exec On uspInsInventory to Public
+Deny Insert Into DoctorClinics to Public
 GO
 
-Grant Exec On uspUpdProduct to Public
+Deny Update On Patients to Public
 GO
 
-Grant Exec On uspUpdInventory to Public
+Deny Update On Doctors to Public
 GO
 
-Grant Exec On uspDelProduct to Public
+Deny Update On Appointments to Public
 GO
 
-Grant Exec On uspDelInventory to Public
+Deny Update On Clinics to Public
+GO
+
+Deny Update On PatientAppointments to Public
+GO
+
+Deny Update On DoctorClinics to Public
+GO
+
+Deny Delete On Patients to Public
+GO
+
+Deny Delete On Doctors to Public
+GO
+
+Deny Delete On Appointments to Public
+GO
+
+Deny Delete On Clinics to Public
+GO
+
+Deny Delete On PatientAppointments to Public
+GO
+
+Deny Delete On DoctorClinics to Public
+GO
+
+Grant Select On vPatients to Public
+GO
+
+Grant Select On vDoctors to Public
+GO
+
+Grant Select On vAppointments to Public
+GO
+
+Grant Select On vClinics to Public
+GO
+
+Grant Select On vPatientAppointments to Public
+GO
+
+Grant Select On vDoctorClinics to Public
+GO
+
+Grant Exec On pInsPatient to Public
+GO
+
+Grant Exec On pUpdPatient to Public
+GO
+
+Grant Exec On pDelPatient to Public
+GO
+
+Grant Exec On pInsDoctor to Public
+GO
+
+Grant Exec On pUpdDoctor to Public
+GO
+
+Grant Exec On pDelDoctor to Public
+GO
+
+Grant Exec On pInsAppointment to Public
+GO
+
+Grant Exec On pUpdAppointment to Public
+GO
+
+Grant Exec On pDelAppointment to Public
+GO
+
+Grant Exec On pInsClinic to Public
+GO
+
+Grant Exec On pUpdClinic to Public
+GO
+
+Grant Exec On pDelClinic to Public
 GO
