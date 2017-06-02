@@ -17,57 +17,78 @@ GO
 Use PatientAppointmentProject
 GO
 
-Create Table Patients 
-    (PatientID int Identity Primary Key,
+Drop Table Clinics
+
+Create Table Patients (
+	PatientID int Identity not null,
     PatientFirstName nvarchar(50) Not Null,
     PatientLastName nvarchar(50) Not Null,
     PatientPhoneNumber nvarchar(20) Not Null,
     PatientEmail nvarchar(50) Not Null,
     PatientAddress nvarchar(50) Not Null,
     PatientCity nvarchar(50) Not Null,
-    PatientState char(2), Not Null,
-    PatientZip nvarchar(10) Not Null)
+    PatientState char(2) Not Null,
+    PatientZip nvarchar(10) Not Null,
+	Primary Key(PatientID)
+	)
 GO
 
-Create Table Doctors 
-    (DoctorID int Identity Primary Key,
+Create Table Doctors (
+	DoctorID int Identity not null,
     DoctorFirstName nvarchar(50) Not Null,
     DoctorLastName nvarchar(50) Not Null,
     DoctorPhoneNumber nvarchar(20) Not Null,
-    DoctorEmail nvarchar(50) Not Null)
+    DoctorEmail nvarchar(50) Not Null,
+	Primary Key(DoctorID)
+	)
 GO
 
-Create Table Appointments 
-    (AppointmentID int Identity Primary Key,
-    PatientID int Foreign Key References Patients(PatientID),
-    DoctorID int Foreign Key References Doctors(DoctorID),
-    ClinicID int Foreign Key References Clinic(ClinicID),
-    AppointmentDatetime nvarchar(50) Not Null,
-    Check AppointmentDatetime > CURRENT_TIMESTAMP)
-GO
-
-Create Table Clinics
-    (ClinicID int identity Primary Key,
+Create Table Clinics (
+	ClinicID int identity not null,
     ClinicName nvarchar(50) Not Null,
     ClinicPhone nvarchar(20) Not Null,
     ClinicEmail nvarchar(50) Not Null,
     ClinicAddress nvarchar(50) Not Null,
     ClinicCity nvarchar(50) Not Null,
     ClinicState char(2) Not Null,
-    ClinicZip nvarchar(10) Not Null
-
+    ClinicZip nvarchar(10) Not Null,
+	Primary Key(ClinicID)
+	)
 GO
 
-Create Table PatientAppointments
-    (PatientAppointmentID int Identity Primary Key,
-    PatientID int Foreign Key References Patients(PatientID),
-    AppointmentID int Foreign Key References Appointments(AppointmentID))
+Create Table Appointments (
+	AppointmentID int identity not null,
+    PatientID int not null,
+    DoctorID int not null,
+    ClinicID int not null,
+    AppointmentDatetime nvarchar(50) Not Null,
+	Primary Key(AppointmentID),
+	Foreign Key(PatientID) References dbo.Patients(PatientID),
+	Foreign Key(DoctorID) References dbo.Doctors(DoctorID),
+	Foreign Key(ClinicID) References dbo.Clinics(ClinicID),
+	Check (AppointmentDatetime > CURRENT_TIMESTAMP)
+	)
 GO
 
-Create Table DoctorClinics
-    (DoctorClinicID int Identity Primary Key,
-    DoctorID int Foreign Key References Doctors(DoctorID),
-    ClinicID int Foreign Key References Clinic(ClinicID))
+
+Create Table PatientAppointments (
+	PatientAppointmentID int Identity not null,
+    PatientID int not null,
+    AppointmentID int not null,
+	Primary Key(PatientAppointmentId),
+	Foreign Key(PatientID) References dbo.Patients(PatientID),
+	Foreign Key(AppointmentID) References dbo.Appointments(AppointmentID)
+	)
+GO
+
+Create Table DoctorClinics (
+	DoctorClinicID int Identity not null,
+    DoctorID int not null,
+    ClinicID int not null,
+	Primary Key(DoctorClinicID),
+	Foreign Key (DoctorID) References dbo.Doctors(DoctorID),
+	Foreign Key(ClinicID) References dbo.Clinics(ClinicID)
+	)
 GO
 
 Create View vPatients AS
@@ -228,15 +249,15 @@ Create Procedure pUpdDoctor
     (@DoctorID int,
     @DoctorFirstName nvarchar(50),
     @DoctorLastName nvarchar(50),
-    @DoctorPhoneNumber nvarhcar(20),
+    @DoctorPhoneNumber nvarchar(20),
     @DoctorEmail nvarchar(50)) AS
 BEGIN TRANSACTION
 BEGIN TRY
 	Update Doctors Set
-    (DoctorFirstName = @DoctorFirstName,
+    DoctorFirstName = @DoctorFirstName,
     DoctorLastName = @DoctorLastName,
     DoctorPhoneNumber = @DoctorPhoneNumber,
-    DoctorEmail = @DoctorEmail)
+    DoctorEmail = @DoctorEmail
 	Where DoctorID = @DoctorID
 	COMMIT TRANSACTION
 END TRY
@@ -299,17 +320,19 @@ BEGIN CATCH
 END CATCH 
 GO
 
-Create Procedure pUpdAppointments 
-    (@AppointmentID
-    @PatientID
-    @DoctorID
-    @AppointmentDatetime) AS
+Create Procedure pUpdAppointments (
+	@AppointmentID int, 
+    @PatientID int,
+    @DoctorID int,
+    @AppointmentDatetime datetime
+	) 
+AS
 BEGIN TRANSACTION
 BEGIN TRY
     Update Appointments Set
-        (PatientID = @PatientID,
+        PatientID = @PatientID,
         DoctorID = @DoctorID,
-        AppointmentDatetime = @AppointmentDatetime)
+        AppointmentDatetime = @AppointmentDatetime
     Where AppointmentID = @AppointmentID
     COMMIT TRANSACTION
 END TRY
