@@ -1,11 +1,12 @@
 /****************************************************************
-Title: INFO 340 - Module 8: Security Part 1
-Desc: This file shows the answers to the Module 8 questions. The tasks include creating a new database 
+Title: INFO 340 - Final Project: Database Script
+Desc: This file shows the database script for the final project. The tasks include creating a new database 
 (tables, views, stored procedures) and setting database security on the database so that only views and 
 stored procedures can be used by the public role
-Dev: Kyle Porter
+Dev: Kyle Porter, Bao Dinh
 ChangeLog:
-5/20/17,Kyle Porter,Created script for tables and stored procedures.
+5/31/17,Kyle Porter,Created script for tables and stored procedures.
+6/1/17,Bao Dinh, Fixed syntax errors and formatted script
 ****************************************************************/
 
 Use master
@@ -16,8 +17,6 @@ GO
 
 Use PatientAppointmentProject
 GO
-
-Drop Table Clinics
 
 Create Table Patients (
 	PatientID int Identity not null,
@@ -116,15 +115,17 @@ Create View vDoctorClinics AS
 GO
 
 
-Create Procedure pInsPatient
-    (@PatientFirstName nvarchar(50),
+Create Procedure pInsPatient (
+	@PatientFirstName nvarchar(50),
     @PatientLastName nvarchar(50),
     @PatientPhoneNumber nvarchar(20),
     @PatientEmail nvarchar(50),
     @PatientAddress nvarchar(50),
     @PatientCity nvarchar(50),
     @PatientState char(2),
-    @PatientZip nvarchar(10)) AS
+    @PatientZip nvarchar(10)
+	) 
+AS
 BEGIN TRANSACTION
 BEGIN TRY
 	Insert Into Patients
@@ -159,8 +160,8 @@ BEGIN CATCH
 END CATCH 
 GO
 
-Create Procedure pUpdPatient 
-    (@PatientID int,
+Create Procedure pUpdPatient (
+	@PatientID int,
     @PatientFirstName nvarchar(50),
     @PatientLastName nvarchar(50),
     @PatientPhoneNumber nvarchar(20),
@@ -168,7 +169,9 @@ Create Procedure pUpdPatient
     @PatientAddress nvarchar(50),
     @PatientCity nvarchar(50),
     @PatientState char(2),
-    @PatientZip nvarchar(50)) AS
+    @PatientZip nvarchar(50)
+	) 
+AS
 BEGIN TRANSACTION
 BEGIN TRY
 	Update Patients Set
@@ -213,11 +216,12 @@ BEGIN CATCH
 END CATCH 
 GO
 
-Create Procedure pInsDoctor 
-    (@DoctorFirstName nvarchar(50),
+Create Procedure pInsDoctor ( 
+	@DoctorFirstName nvarchar(50),
     @DoctorLastName nvarchar(50),
     @DoctorPhoneNumber nvarchar(20),
-    @DoctorEmail nvarchar(50))
+    @DoctorEmail nvarchar(50)
+	)
  AS
 BEGIN TRANSACTION
 BEGIN TRY
@@ -245,12 +249,14 @@ BEGIN CATCH
 END CATCH 
 GO
 
-Create Procedure pUpdDoctor 
-    (@DoctorID int,
+Create Procedure pUpdDoctor (
+	@DoctorID int,
     @DoctorFirstName nvarchar(50),
     @DoctorLastName nvarchar(50),
     @DoctorPhoneNumber nvarchar(20),
-    @DoctorEmail nvarchar(50)) AS
+    @DoctorEmail nvarchar(50)
+	) 
+AS
 BEGIN TRANSACTION
 BEGIN TRY
 	Update Doctors Set
@@ -292,10 +298,12 @@ BEGIN CATCH
 END CATCH 
 GO
 
-Create Procedure pInsAppointment
-    (@PatientID int,
+Create Procedure pInsAppointment (
+	@PatientID int,
     @DoctorID int,
-    @AppointmentDatetime datetime) AS
+    @AppointmentDatetime datetime
+	)
+AS
 BEGIN TRANSACTION
 BEGIN TRY
     Insert Into Appointments
@@ -367,14 +375,16 @@ BEGIN CATCH
 END CATCH 
 GO
 
-Create Procedure pInsClinic
-    (@ClinicName nvarchar(50),
+Create Procedure pInsClinic (
+	@ClinicName nvarchar(50),
     @ClinicPhone nvarchar(20),
     @ClinicEmail nvarchar(50),
     @ClinicAddress nvarchar(50),
     @ClinicCity nvarchar(50),
     @ClinicState char(2),
-    @ClinicZip nvarchar(10)) AS
+    @ClinicZip nvarchar(10)
+	) 
+AS
 BEGIN TRANSACTION
 BEGIN TRY
     Insert Into Clinics 
@@ -407,25 +417,27 @@ BEGIN CATCH
 END CATCH 
 GO
 
-Create Procedure pUpdClinics
-    (@ClinicID int,
+Create Procedure pUpdClinics (
+	@ClinicID int,
     @ClinicName nvarchar(50),
     @ClinicPhone nvarchar(20),
     @ClinicEmail nvarchar(50),
     @ClinicAddress nvarchar(50),
     @ClinicCity nvarchar(50),
     @ClinicState char(2),
-    @ClinicZip nvarchar(10)) AS
+    @ClinicZip nvarchar(10)
+	)
+AS
 BEGIN TRANSACTION
 BEGIN TRY
     Update Clinics Set
-    (ClinicName = @ClinicName,
+    ClinicName = @ClinicName,
     ClinicPhone = @ClinicPhone,
     ClinicEmail = @ClinicEmail,
     ClinicAddress = @ClinicAddress,
     ClinicCity = @ClinicCity,
     ClinicState = @ClinicState,
-    ClinicZip = @ClinicZip)
+    ClinicZip = @ClinicZip
     Where ClinicID = @ClinicID
     COMMIT TRANSACTION
 END TRY
@@ -479,22 +491,22 @@ GO
 Deny Select On DoctorClinics to Public
 GO
 
-Deny Insert Into Patients to Public
+Deny Insert On Patients to Public
 GO
 
-Deny Insert Into Doctors to Public
+Deny Insert On Doctors to Public
 GO
 
-Deny Insert Into Appointments to Public
+Deny Insert On Appointments to Public
 GO
 
-Deny Insert Into Clinics to Public
+Deny Insert On Clinics to Public
 GO
 
-Deny Insert Into PatientAppointments to Public
+Deny Insert On PatientAppointments to Public
 GO
 
-Deny Insert Into DoctorClinics to Public
+Deny Insert On DoctorClinics to Public
 GO
 
 Deny Update On Patients to Public
@@ -572,7 +584,7 @@ GO
 Grant Exec On pInsAppointment to Public
 GO
 
-Grant Exec On pUpdAppointment to Public
+Grant Exec On pUpdAppointments to Public
 GO
 
 Grant Exec On pDelAppointment to Public
@@ -581,7 +593,7 @@ GO
 Grant Exec On pInsClinic to Public
 GO
 
-Grant Exec On pUpdClinic to Public
+Grant Exec On pUpdClinics to Public
 GO
 
 Grant Exec On pDelClinic to Public
