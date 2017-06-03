@@ -18,6 +18,8 @@ GO
 Use PatientAppointmentProject
 GO
 
+Drop Table Appointments
+
 Create Table Patients (
 	PatientID int Identity not null,
     PatientFirstName nvarchar(50) Not Null,
