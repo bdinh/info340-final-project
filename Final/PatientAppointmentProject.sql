@@ -12,13 +12,16 @@ ChangeLog:
 Use master
 GO
 
+IF EXISTS(select * from sys.databases where name='PatientAppointmentProject')
+DROP DATABASE PatientAppointmentProject
+GO
+
 Create Database PatientAppointmentProject
 GO
 
 Use PatientAppointmentProject
 GO
 
-Drop Table Appointments
 
 Create Table Patients (
 	PatientID int Identity not null,
@@ -45,7 +48,7 @@ Create Table Doctors (
 GO
 
 Create Table Clinics (
-	ClinicID int identity not null,
+	ClinicID int Identity not null,
     ClinicName nvarchar(50) Not Null,
     ClinicPhone nvarchar(20) Not Null,
     ClinicEmail nvarchar(50) Not Null,
@@ -58,13 +61,11 @@ Create Table Clinics (
 GO
 
 Create Table Appointments (
-	AppointmentID int identity not null,
-    PatientID int not null,
+	AppointmentID int Identity not null,
     DoctorID int not null,
     ClinicID int not null,
     AppointmentDatetime nvarchar(50) Not Null,
 	Primary Key(AppointmentID),
-	Foreign Key(PatientID) References dbo.Patients(PatientID),
 	Foreign Key(DoctorID) References dbo.Doctors(DoctorID),
 	Foreign Key(ClinicID) References dbo.Clinics(ClinicID),
 	Check (AppointmentDatetime > CURRENT_TIMESTAMP)
@@ -309,12 +310,10 @@ AS
 BEGIN TRANSACTION
 BEGIN TRY
     Insert Into Appointments
-        (PatientID,
-        DoctorID,
+        (DoctorID,
         AppointmentDatetime)
     Values
-        (@PatientID,
-        @DoctorID,
+        (@DoctorID,
         @AppointmentDatetime)
     COMMIT TRANSACTION
 END TRY
@@ -332,7 +331,6 @@ GO
 
 Create Procedure pUpdAppointments (
 	@AppointmentID int, 
-    @PatientID int,
     @DoctorID int,
     @AppointmentDatetime datetime
 	) 
@@ -340,7 +338,6 @@ AS
 BEGIN TRANSACTION
 BEGIN TRY
     Update Appointments Set
-        PatientID = @PatientID,
         DoctorID = @DoctorID,
         AppointmentDatetime = @AppointmentDatetime
     Where AppointmentID = @AppointmentID
